@@ -92,7 +92,7 @@ function mainMenu(person, people) {
 	switch (mainMenuUserActionChoice) {
 		case 'info':
 			//! TODO
-			// displayPersonInfo(person);
+			displayPersonInfo(person);
 			break;
 		case 'family':
 			//! TODO
@@ -111,6 +111,11 @@ function mainMenu(person, people) {
 	}
 
 	return mainMenu(person, people);
+}
+function displayPersonInfo(person){
+	for (const p in person){
+		console.log(`${p} ${person[p]}`)
+}
 }
 
 function displayPeople(displayTitle, peopleToDisplay) {
