@@ -101,8 +101,8 @@ function mainMenu(person, people) {
 			break;
 		case 'descendants':
 			//! TODO
-			// let personDescendants = findPersonDescendants(person, people);
-			// displayPeople('Descendants', personDescendants);
+			let personDescendants = findPersonDescendants(person, people);
+			displayPeople('Descendants', personDescendants);
 			break;
 		case 'quit':
 			return;
@@ -118,18 +118,37 @@ function displayPersonInfo(person){
 }
 }
 function findPersonFamily(person, people){
-	
-	const personFam = people.filter(otherPerson => 
+	// let family = people.filter(otherPerson => {
+	// 	if (otherPerson.id === person.currentSpouse) {
+	// 		console.log('Wife: ' + otherPerson.firstName + ' ' + otherPerson.lastName);
+	// 	}
+	// 	if (otherPerson.parents.some(parentId => person.parents.includes(parentId))) {
+	// 		console.log('Sibling: ' + otherPerson.firstName + ' ' + otherPerson.lastName);
+	// 	}
+	// 	if (otherPerson.parents.some(parentId => person.parents.includes(parentId))) {
+	// 		console.log('Parent: ' + otherPerson.firstName + ' ' + otherPerson.lastName);
+	// 	}
+	// 	return otherPerson.id === person.currentSpouse || otherPerson.parents.some(parentId => person.parents.includes(parentId));
+	// });
+	// return family;
+
+	return people.filter(otherPerson => 
 		otherPerson.id === person.currentSpouse || 
 		otherPerson.parents.some(parentId => person.parents.includes(parentId))
-		
 	);
-	
-	
-	// return people.filter(otherPerson => 
-	// 	otherPerson.id === person.currentSpouse || 
-	// 	otherPerson.parents.some(parentId => person.parents.includes(parentId))
-	// );
+
+}
+function findPersonDescendants(person, people){
+let descendants = [];
+function findDescendants(person){
+	let children = people.filter(otherPerson => otherPerson.parents.includes(person.id));
+	descendants.push(...children);
+	for( let child of children){
+		findDescendants(child);
+	}
+}
+findDescendants(person);
+return descendants;
 }
 
 function displayPeople(displayTitle, peopleToDisplay) {
